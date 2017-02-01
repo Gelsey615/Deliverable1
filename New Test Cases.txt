@@ -1,0 +1,21 @@
+IDENTIFIER: TEST-ITERATION-DISTRIBUTION
+TEST CASE: This test case aims to confirm that the program allocates iterations evenly per thread when the number of iterations is proportional to the number of threads.
+PRECONDITIONS: Command prompt window is opened and the current directory is the folder where GoatGoatCar.jar is saved.
+EXECUTION STEPS: 1. Pick two random positive integers n and k.
+           	     2. Run the program with command line argument “java -jar GoatGoatCar.jar car goat k*n n” 
+		             3. Repeat step 1&2 with different values of n and k for 3 times.
+POSTCONDITIONS: Every time after Step 1&2 are repeated, the program displays the chances of getting both the good and bad options had the user switched or had the user stayed in current k*n iterations and each thread did k iterations of calculation.
+
+IDENTIFIER: TEST-ITERATION-DISTIBUTION-EDGE-CASE
+TEST CASE: This test case aims to confirm that, when the number of iterations is not proportional to the number of threads, the number of iterations distributed per thread never has a difference of more than one compared to any other thread. Here we test with an edge case where, when the number of threads is n, the number of iterations is k*n+(n-1) with k is a positive number.
+PRECONDITIONS: Command prompt window is opened and the current directory is the folder where GoatGoatCar.jar is saved.
+EXECUTION STEPS: 1. Pick two random positive integers n and k.
+           	     2. Run the program with command line argument “java -jar GoatGoatCar.jar car goat k*n+(n-1) n” 
+		             3. Repeat step 1&2 with different values of n and k for 3 times.
+POSTCONDITIONS: Every time after Step 1&2 are repeated, the program displays the chances of getting both the good and bad options had the user switched or had the user stayed in current k*n+(n-1) iterations. And, for the first (n-1) threads, each thread did k+1 iterations of calculation; for the last thread, it did k iterations of calculation. 
+
+
+The following paragrahs should be paste to the first page of the paper which is the introduction of the entire paper.
+Xinyue:
+	The interesting part of this project for me is to think about edge cases. From my perspective, there are two steps for writing an edge test case. First, you have to decide whether there is an edge value or a corner case related to the requirement. Second, you have to find it. I wrote two edge cases. One is on the FUN-THREAD requirement, the other is on FUN-SMALL-NUM requirement. 
+	For the first edge case whose identifier is TEST-ITERATION-DISTIBUTION-EDGE-CASE, I decide there is a possibility for edge case because of the proportion distribution of the iterations. What if the number of iterations is not proportional to the number of threads? This question leads to the edge test case which runs the program with k*n+(n-1) iterations and n threads. Because k*n+(n-1) from the perspective of integers is the nearest to (k+1)n. Of course (k+1)n+1 is another edge case, but I omitted this case here since the two cases are basically testing with the same idea. The second edge case, which is TEST-SMALL-NUM-WITH-EDGE-CASE, is on FUN-SMALL-NUM. It is the border value of the number of iterations that reminds me of the possibility for edge case. What if we test just with the border value, namely 100 iterations? According to the requirement, the border value 100 should not issue warning. So I wrote corresponding test case and actually found a defect.
